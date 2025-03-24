@@ -1,0 +1,16 @@
+{
+  "name": "xprtrusted",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "workspaces": [
+    "web/*",
+    "bot/*",
+    "contract/*"
+  ],
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
