@@ -13,7 +13,13 @@ const bot = new Telegraf(BOT_TOKEN);
 
 // Start command
 bot.command('start', async (ctx) => {
+    const userId = ctx.from.id;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://xprtrust.com/user/${userId}`;
+    
     await ctx.reply('Welcome to XPR Trusted Bot! 👋');
+    await ctx.replyWithPhoto({ url: qrCodeUrl }, {
+        caption: `Your unique QR code for user ID: ${userId}\nScan to view your profile!`
+    });
 });
 
 // Help command
