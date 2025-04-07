@@ -1,0 +1,65 @@
+{
+  "version": "eosio::abi/1.2",
+  "structs": [
+    {
+      "name": "TrustedAccount",
+      "base": "",
+      "fields": [
+        {
+          "name": "account",
+          "type": "name"
+        },
+        {
+          "name": "trustedKey",
+          "type": "checksum256"
+        }
+      ]
+    },
+    {
+      "name": "acc.trustify",
+      "base": "",
+      "fields": [
+        {
+          "name": "account",
+          "type": "name"
+        },
+        {
+          "name": "hash",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "dev.untrust",
+      "base": "",
+      "fields": []
+    }
+  ],
+  "types": [],
+  "actions": [
+    {
+      "name": "acc.trustify",
+      "type": "acc.trustify",
+      "ricardian_contract": ""
+    },
+    {
+      "name": "dev.untrust",
+      "type": "dev.untrust",
+      "ricardian_contract": ""
+    }
+  ],
+  "tables": [
+    {
+      "name": "accounts",
+      "type": "TrustedAccount",
+      "index_type": "i64",
+      "key_names": [],
+      "key_types": []
+    }
+  ],
+  "ricardian_clauses": [],
+  "variants": [],
+  "action_results": [],
+  "abi_extensions": [],
+  "error_messages": []
+}
