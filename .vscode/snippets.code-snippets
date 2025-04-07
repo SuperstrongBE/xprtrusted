@@ -1,0 +1,46 @@
+{
+
+  "Create React": {
+  	"scope": "javascript,typescript,typescriptreact",
+  	"prefix": "_fnc",
+  	"body": [
+      "\"use client\"",
+      "import classNames from 'classnames';",
+  		"type $1Props = React.HTMLAttributes<$2> & {}", 
+      "export const $1: React.FunctionComponent<$1Props> = ({ children,className}) => { ",
+          "const rootClasses = classNames({",
+          "[`\\${className}`]: className,"
+          
+      "});",
+      "   return <$3 className={`\\${rootClasses}`}>{children}</$3>",
+      "}"
+
+
+  	],
+  	"description": "Create a new React function component"
+  },
+  "Create class Name": {
+  	"scope": "javascript,typescript,typescriptreact",
+  	"prefix": "_clsn",
+  	"body": [
+      "const rootClasses = classNames({",
+        "[`${className}`]: className,",
+        "'card bg-base-100 shadow-xl rounded-lg': true,",
+        "});"
+  	],
+  	"description": "Create a new React function component"
+  },
+  "Create NextJS page": {
+  	"scope": "javascript,typescript,typescriptreact",
+  	"prefix": "_nextp",
+  	"body": [
+      "export default async function $1() {", 
+        
+        "return <>",
+        "</>",
+      
+      "}",
+  	],
+  	"description": "Create a new React function component"
+  },
+}
