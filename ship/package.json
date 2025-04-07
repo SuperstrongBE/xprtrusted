@@ -1,0 +1,64 @@
+{
+  "version": "0.0.1",
+  "source": "./src/index.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "peerDependencies": {
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc -b",
+    "debug": "bun run build && pm2 kill && pm2 start ecosystem.config.js && pm2 log",
+    "pm2:start": "pm2 kill && bun run build && pm2 start ecosystem.config.js",
+    "pm2:start:prod": "pm2 kill && pm2 restart ecosystem.config.js --env production",
+    "pm2:watch": "pm2 kill && pm2 start --interpreter ~/.bun/bin/bun ecosystem.config.js --watch",
+    "types:bc": "bunx abi2ts tracechain -t > ./src/interfaces/tracechain.ts ",
+    "types:db": "bunx supabase gen types typescript --project-id \"tsaxtomiidckqzpqixcu\" --schema public > ./src/interfaces/db_scheme.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^16.0.0",
+    "@types/text-encoding": "^0.0.36",
+    "@types/ws": "^7.4.6",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@blockmatic/eosio-ship-reader": "^1.2.0",
+    "@blockmatic/tsconfig": "^2.0.0",
+    "@proton/api": "^28.7.1",
+    "@proton/js": "^28.0.0",
+    "@proton/vert": "^0.3.24",
+    "@rockerone/abi2ts": "^0.1.5",
+    "@supabase/supabase-js": "^2.39.7",
+    "@types/node-cron": "^3.0.11",
+    "@types/node-telegram-bot-api": "^0.64.7",
+    "@types/ramda": "^0.30.2",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.1",
+    "lodash": "^4.17.21",
+    "node-cron": "^3.0.3",
+    "node-fetch": "2",
+    "node-telegram-bot-api": "^0.66.0",
+    "pg": "^8.11.3",
+    "ramda": "^0.30.1",
+    "rimraf": "^5.0.5",
+    "rxjs": "^7.8.1",
+    "sequelize": "^6.33.0",
+    "sequelize-typescript": "^2.1.5",
+    "slugify": "^1.6.6",
+    "text-encoding": "^0.7.0",
+    "twitter-api-v2": "^1.17.1",
+    "winston": "^3.3.3",
+    "ws": "^7.5.1"
+  },
+  "resolutions": {
+    "@proton/tsconfig": "^1.6.0",
+    "@proton/js": "^28.1.2",
+    "@bloks/constants": "28.11.1",
+    "@bloks/utils": "27.10.1",
+    "@bloks/numbers": "27.6.0",
+    "@eosrio/node-abieos": "2.1.1",
+    "rxjs": "6.6.7",
+    "@blockmatic/tsconfig": "1.7.2"
+  }
+}
