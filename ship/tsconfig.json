@@ -1,0 +1,23 @@
+{
+  "extends": "./node_modules/@blockmatic/tsconfig/tsconfig.nodejs.json",
+  "compilerOptions": {
+    "outDir": "dist/",
+    "target": "es2020",
+    "lib": ["es6", "esnext", "es2015"],
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "declaration": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "skipLibCheck": true,
+    "rootDir": "src/"
+  },
+  "include": ["./src/"],
+  "exclude": ["node_modules/*","dist"]
+}
