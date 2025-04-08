@@ -13,6 +13,9 @@
     "tg-app/*",
     "ship/*"
   ],
+  "scripts": {
+    "deploy:tg-app": "bun --cwd tg-app run build"
+  },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
