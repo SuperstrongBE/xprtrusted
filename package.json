@@ -12,7 +12,7 @@
     "apps/*"
   ],
   "scripts": {
-    "deploy:tg-app": "bun --cwd tg-app run build"
+    "deploy:tg-app": "yarn --cwd apps/tgapp run build"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
