@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@metalquest/db-client": "workspace:*",
     "@proton/link": "^4.2.19",
     "@supabase/supabase-js": "^2.49.4",
     "@twa-dev/sdk": "^8.0.2",
