@@ -40,5 +40,12 @@
     "@bloks/constants": "28.11.1",
     "@bloks/utils": "27.10.1",
     "@bloks/numbers": "27.6.0"
+  },
+  "resolutions": {
+    "@proton/tsconfig": "^1.6.0",
+    "@proton/js": "^28.1.2",
+    "@bloks/constants": "28.11.1",
+    "@bloks/utils": "27.10.1",
+    "@bloks/numbers": "27.6.0"
   }
 }
