@@ -2,7 +2,7 @@ import { Markup, Telegraf } from 'telegraf';
 import * as dotenv from 'dotenv';
 import {createHash} from 'node:crypto'
 import { JsonRpc } from '@proton/js';
-import { getDbClient, type Database, type Tables } from 'metal-quest-db-client';
+import { getDbClient, type Database, type Tables } from '@metalquest/db-client';
 
 dotenv.config();
 

@@ -1,5 +1,7 @@
 {
+  "name": "@metalquest/ship-server",
   "version": "0.0.1",
+  "private": true,
   "source": "./src/index.ts",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -26,7 +28,7 @@
     "@blockmatic/eosio-ship-reader": "^1.2.0",
     "@blockmatic/tsconfig": "^2.0.0",
     "@proton/api": "^28.7.1",
-    "@proton/js": "^28.0.0",
+    "@proton/js": "28.0.0",
     "@proton/vert": "^0.3.24",
     "@rockerone/abi2ts": "^0.1.5",
     "@supabase/supabase-js": "^2.39.7",
@@ -52,11 +54,6 @@
     "ws": "^7.5.1"
   },
   "resolutions": {
-    "@proton/tsconfig": "^1.6.0",
-    "@proton/js": "^28.1.2",
-    "@bloks/constants": "28.11.1",
-    "@bloks/utils": "27.10.1",
-    "@bloks/numbers": "27.6.0",
     "@eosrio/node-abieos": "2.1.1",
     "rxjs": "6.6.7",
     "@blockmatic/tsconfig": "1.7.2"
