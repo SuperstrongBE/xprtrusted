@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       actor: data.signer.actor,
       permission: data.signer.permission,
       //TODO: Fix this type shit
-      //@ts-ignore
+      //@ts-expect-error Type error 
       transaction: data.transaction,
       signatures: data.signatures,
     });

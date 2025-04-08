@@ -18,7 +18,7 @@ export const ProgressGauge: React.FunctionComponent<ProgressGaugeProps> = ({ cla
     
 
     
-  },[])
+  },[progress])
 
   return <div className={`${rootClasses}`}>
      <div style={{transform:`scaleX(${percentToClass})`}} className={`absolute left-0 right-0 top-0 bottom-0 bg-green-600  origin-left`}></div>

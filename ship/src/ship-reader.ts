@@ -15,7 +15,7 @@ import { Database, Tables } from './interfaces/db_scheme';
 
 const dbClient = new SupabaseClient<Database>(
   process.env.SUPABASE_URL!,
-  process.env.SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE!,
 );
 
 

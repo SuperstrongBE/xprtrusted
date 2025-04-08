@@ -2,10 +2,10 @@ import { Database } from '../../interfaces/db_scheme';
 import { loadReader } from '../../ship-reader';
 import { SupabaseClient } from '@supabase/supabase-js';
 
-
+console.log(process.env)
 const dbClient = new SupabaseClient<Database>(
   process.env.SUPABASE_URL!,
-  process.env.SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE!,
 );
 
 const runProcess = async () => {

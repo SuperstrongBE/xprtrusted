@@ -50,51 +50,14 @@ dbClient.realtime.channel('achievements').on('postgres_changes', {event:"INSERT"
 
 // Start command
 bot.command('start', async (ctx) => {
-    const userId = ctx.from.id;
-    const shaUser = await getSHA256Hash(userId.toString())
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.227:3002/verify/${shaUser}`;
-    
-    await ctx.reply('Welcome to XPR Trusted Bot! 👋');
-    await ctx.replyWithPhoto({ url: qrCodeUrl }, {
-        caption: `Your unique QR code for user ID: ${userId} - ${shaUser}\nScan to view your profile!`
-    });
+  ctx.reply(
+    'Welcome to metal quest, open the app to start',
+    Markup.inlineKeyboard([
+      Markup.button.webApp('Open Metal Quest', `${WEBAPP_URL}`)
+    ])
+  );
 });
 
-bot.command('verify', async (ctx) => {
-    const userId = ctx.from.id;
-    const shaUser = await getSHA256Hash(userId.toString())
-    const rpc = new JsonRpc(['https://testnet.rockerone.io']);
-    const rows = await rpc.get_table_rows({
-        code: 'xprtrustify',
-        table:"accounts",
-        scope: 'xprtrustify',
-        lower_bound:toEOSIOSha256(shaUser),
-        upper_bound: toEOSIOSha256(shaUser),
-        index_position: 2,
-        key_type: "sha256", 
-        
-    })
-    if (!rows || !rows.rows || rows.rows.length == 0) await ctx.reply('Not verified');
-    await ctx.reply(JSON.stringify(rows.rows));
-
-})
-bot.command('app', (ctx) => {
-    ctx.reply(
-      'Click the button below to open the app:',
-      Markup.keyboard([
-        Markup.button.webApp('Open WebApp', `${WEBAPP_URL}`)
-      ]).resize()
-    );
-});
-  
-bot.command('inlineapp', (ctx) => {
-    ctx.reply(
-      'Click the button below to open the app:',
-      Markup.inlineKeyboard([
-        Markup.button.webApp('Open WebApp', `${WEBAPP_URL}`)
-      ])
-    );
-  });
 
 // Start the bot
 bot.launch({

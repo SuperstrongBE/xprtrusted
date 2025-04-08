@@ -5,7 +5,7 @@ import classNames from "classnames";
 import {useCallback, useEffect, useState} from "react";
 import {LinkSession, useXPRN} from "xprnkit";
 import {Button} from "../button";
-
+import {ResolvedTransaction, TransactResult} from '@proton/link'
 import {registerTrusted} from "@/services/register-trusted";
 import {Stepper} from "../02_molecules/stepper";
 import { wait } from "@/utils/wait.utils";
@@ -53,7 +53,7 @@ export const RegisterPage: React.FunctionComponent<RegisterPageProps> = ({
               {actions: [trustifyAction]},
               {broadcast: true}
             )
-            .then((tx: any) => {
+            .then((tx: TransactResult) => {
               //TODO contact API to verify auth + push user to db
               console.log(tx);
               
@@ -92,7 +92,7 @@ export const RegisterPage: React.FunctionComponent<RegisterPageProps> = ({
               {actions: [generateAuthAction]},
               {broadcast: false}
             )
-            .then((tx: any) => {
+            .then((tx: TransactResult) => {
               
               console.log(tx);
               registerTrusted(
@@ -102,7 +102,7 @@ export const RegisterPage: React.FunctionComponent<RegisterPageProps> = ({
                     permission: session.auth.permission.toString(),
                     public_key: session.publicKey.toString(),
                   },
-                  transaction: tx.resolvedTransaction,
+                  transaction: tx.resolvedTransaction as ResolvedTransaction,
                   signatures: tx.signatures,
                 },
                 {
@@ -133,7 +133,7 @@ export const RegisterPage: React.FunctionComponent<RegisterPageProps> = ({
       () => {}
     );
     console.log("After connect");
-  }, [connect, pushTrustify]);
+  }, [connect]);
 
   useEffect(() => {
     setCurrentStep(0);
