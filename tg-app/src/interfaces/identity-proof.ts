@@ -1,5 +1,5 @@
-import { ApiInterfaces } from "xprnkit";
 
+import {ResolvedTransaction, Signature} from '@proton/link'
 export type IdentityProofResponse = {
   isVerified: boolean;
   created: boolean;
@@ -13,6 +13,6 @@ export type IdentityProofParams = {
     permission: string;
     public_key: string;
   };
-  transaction: ApiInterfaces.Transaction;
-  signatures: {data:Uint8Array,type:string};
+  transaction: ResolvedTransaction;
+  signatures: Signature[];
 };

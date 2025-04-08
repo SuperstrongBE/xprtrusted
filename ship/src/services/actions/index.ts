@@ -5,7 +5,7 @@ import * as R from 'ramda'
 
 const dbClient = new SupabaseClient<Database>(
   process.env.SUPABASE_URL!,
-  process.env.SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE!
 );
 
 const runProcess = async () => {

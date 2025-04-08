@@ -1,6 +1,6 @@
 "use client";
 import classNames from "classnames";
-import {useCallback} from "react";
+
 type StepperProps = React.HTMLAttributes<HTMLDivElement> & {
   maxSteps: number;
 };
@@ -12,15 +12,6 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
     [`${className}`]: className,
   });
 
-  const getGridColumns = useCallback(() => {
-    return new Array(maxSteps)
-      .fill(null)
-      .map((_, index) => {
-        if (index == maxSteps - 1) return "min-content";
-        return "min-content_1fr";
-      })
-      .join("_");
-  }, [maxSteps]);
 
   return (
     <div className={`${rootClasses}`}>
@@ -29,7 +20,7 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
         
       >
         {new Array(maxSteps).fill(null).map((_, index) => (
-          <StepperItem first={index==0} last={index==maxSteps-1} key={index}>{ index+1}</StepperItem>
+          <StepperItem  last={index==maxSteps-1} key={index}>{ index+1}</StepperItem>
         ))}
       </div>
     </div>
@@ -37,13 +28,11 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
 };
 
 type StepperItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  first?:boolean
   last?: boolean,
 };
 export const StepperItem: React.FunctionComponent<StepperItemProps> = ({
   children,
   className,
-  first,
   last
 }) => {
   const rootClasses = classNames({
