@@ -1,5 +1,7 @@
 {
-  "name": "bot",
+  "name": "@metalquest/bot",
+  "version": "0.0.1",
+  "private": true,
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
@@ -10,7 +12,6 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "telegraf": "^4.16.3",
-    "@metalquest/db-client": "workspace:*"
+    "telegraf": "^4.16.3"
   }
 }

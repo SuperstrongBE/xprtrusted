@@ -1,6 +1,7 @@
 {
-  "name": "xprtrust",
-  "version": "0.0.0",
+  "name": "@metalquest/contract",
+  "private": true,
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "build": "npx proton-asc xprtrust.contract.ts",
@@ -18,7 +19,7 @@
     "@greymass/abi2core": "^1.1.0",
     "@greymass/eosio": "^0.5.5",
     "@proton/cli": "^0.1.74",
-    "@proton/js": "^26.1.2",
+    "@proton/js": "28.0.0",
     "@proton/vert": "^0.3.18",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
