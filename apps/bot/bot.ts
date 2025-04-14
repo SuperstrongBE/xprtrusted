@@ -50,6 +50,18 @@ dbClient.realtime.channel('achievements').on('postgres_changes', {event:"INSERT"
 
 // Start command
 bot.command('start', async (ctx) => {
+  const payload = ctx.text.substring(6);
+  console.log(payload);
+  if (payload.length) {
+    const url = Buffer.from(payload, 'base64').toString();
+    const params = Object.fromEntries(new URLSearchParams(url).entries());
+
+    // Result: { a: '123', b: 'gdfgd-gdfgdfgdf' }
+    console.log(url);
+  } else {
+    console.log("no payload")
+    // Start bot without payload
+  }
   ctx.reply(
     'Welcome to metal quest, open the app to start',
     Markup.inlineKeyboard([
