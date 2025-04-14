@@ -26,6 +26,7 @@ export const loadReader = async (): Promise<any> => {
 
   
   const unique_contract_names = contracts
+  console.log("## -> unique_contract_names",unique_contract_names)
   const abisArr = await Promise.all(unique_contract_names.map((account_name) => fetchAbi(account_name,process.env.NODE_SHIP_HTTP!)))
   const contract_abis: () => EosioReaderAbisMap = () => {
     const numap = new Map()
