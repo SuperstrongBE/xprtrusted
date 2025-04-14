@@ -110,6 +110,32 @@ return <main className="container flex flex-col w-full  gap-4">
           </div>
         </div>
       </li>
+      <li>
+        <div className="gap-2 bg-gray-900 p-2 grid ">
+          <div className="grid grid-cols-[1fr_max-content] w-full items-center">
+            <h2 className="text-xl font-bold">Deposit XUSDC & XPR to Pools (receive LP token)</h2>
+            <BrandBlockLogo></BrandBlockLogo>
+          </div>
+          <div className="gap-4 grid grid-cols-[max-content_1fr_max-content] items-center">
+            <p>Progress</p>
+            <ProgressGauge progress={0.21} />
+            <p>21%</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div className="gap-2 bg-gray-900 p-2 grid ">
+          <div className="grid grid-cols-[1fr_max-content] w-full items-center">
+            <h2 className="text-xl font-bold">Deposit XUSDC & XPR to Pools (receive LP token)</h2>
+            <BrandBlockLogo></BrandBlockLogo>
+          </div>
+          <div className="gap-4 grid grid-cols-[max-content_1fr_max-content] items-center">
+            <p>Progress</p>
+            <ProgressGauge progress={0.21} />
+            <p>21%</p>
+          </div>
+        </div>
+      </li>
     </ul>
   
 </main>

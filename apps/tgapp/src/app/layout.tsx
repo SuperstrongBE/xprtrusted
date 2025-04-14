@@ -4,6 +4,8 @@ import "./globals.css";
 import {XPRNProvider} from "xprnkit";
 import {AppHeader} from "../components/03_organisms/app-header";
 import { AppFooter } from "../components/03_organisms/app-footer";
+import { TrustifyProvider } from "@/components/05_providers/UserProvider";
+import { OnboardingDrawer } from "@/components/03_organisms/onboarding-drawer/onboarding-drawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,25 +32,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
+        <TrustifyProvider>
         <XPRNProvider
           config={{
             endpoints: ["https://testnet.rockerone.io"],
             chainId:
               "71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd",
-            apiMode: "testnet",
+            apiMode: "mainnet",
             dAppName: "MetalX Quest",
             requesterAccount: "rockeronebp",
           }}
         >
-          <div className="grid grid-rows-[min-content_1fr_min-content] min-h-dvh relative">
-            <AppHeader className="sticky top-0 bg-[#0a0a0a] z-20" />
-            <div className="md:p-2 flex justify-center items-center p-4 overflow-scroll">
-            {children}
-
-            </div>
-            <AppFooter />
-          </div>
-        </XPRNProvider>
+          
+              <OnboardingDrawer className="flex h-dvh relative" >
+              {children}
+              </OnboardingDrawer>
+          
+          </XPRNProvider>
+          </TrustifyProvider>
       </body>
     </html>
   );

@@ -3,10 +3,12 @@ import classNames from "classnames";
 
 type StepperProps = React.HTMLAttributes<HTMLDivElement> & {
   maxSteps: number;
+  activeStep: number;
 };
 export const Stepper: React.FunctionComponent<StepperProps> = ({
   className,
   maxSteps,
+  activeStep
 }) => {
   const rootClasses = classNames({
     [`${className}`]: className,
@@ -16,11 +18,11 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
   return (
     <div className={`${rootClasses}`}>
       <div
-        className={`justify-between relative flex`}
+        className={`relative flex gap-3`}
         
       >
         {new Array(maxSteps).fill(null).map((_, index) => (
-          <StepperItem  last={index==maxSteps-1} key={index}>{ index+1}</StepperItem>
+          <StepperItem  active={index<=activeStep} key={index}></StepperItem>
         ))}
       </div>
     </div>
@@ -28,31 +30,24 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
 };
 
 type StepperItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  last?: boolean,
+  active?: boolean,
 };
 export const StepperItem: React.FunctionComponent<StepperItemProps> = ({
-  children,
-  className,
-  last
+  active,
+  className
 }) => {
   const rootClasses = classNames({
     [`${className}`]: className,
-    'grow': !last,
-    'relative flex': true,
-    'items-center':true,
-    'after:content-[""] after:absolute after:h-0.5  after:bg-purple-500 ':!last,
-    'after:left-0 after:right-0 ':true,
-    'justify-start':true,
+    'relative': true,
+    
+    'bg-black': true,
+    'opacity-30': !active,
+    'w-20 h-2 rounded-full':true
     
   });
   return (
     <div className={`${rootClasses}`}>
-      
-        <div
-          className={`z-10 w-10 h-10 aspect-square rounded-full bg-purple-500 flex justify-center items-center relative`}
-        >
-          {children}
-        </div>
+    
       
     </div>
   );
