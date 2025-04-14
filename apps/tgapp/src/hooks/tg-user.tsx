@@ -11,7 +11,9 @@ const useAppUser = () => {
   const [trustifyUser, setTrustifyUser] = useState<TrustifyAccount>();
   const {rpc} = useXPRN()
   useEffect(() => {
-    if (typeof window !== "undefined") {
+
+    if (!window) return 
+    console.log('checked window ...')
       if (WebApp.initDataUnsafe && WebApp.initDataUnsafe.user) {
         WebApp.expand();
         setTelegramUser(WebApp.initDataUnsafe.user);
@@ -25,10 +27,11 @@ const useAppUser = () => {
             "https://t.me/i/userpic/320/n1EagZ7JFy8mSrdGAWdxwJx5JM_txHjHcA5TSceQMCo.svg",
           username: "rockerzOne",
         };
+        console.log(mockedUser)
         setTelegramUser(mockedUser);
       }
-    }
-  }, []);
+    
+  }, [setTelegramUser]);
 
   const fetchTrustifyUser = useCallback(async () => {
     
@@ -53,7 +56,7 @@ const useAppUser = () => {
         setTrustifyUser(query.rows[0]);
         
       }
-    
+      console.log('when fetchTrustify',query.rows[0])
       return query.rows[0];
     
   }, [rpc, telegramUser, setTrustifyUser]);
