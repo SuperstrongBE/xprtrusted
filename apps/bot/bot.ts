@@ -107,7 +107,7 @@ bot.command("start", async ctx => {
   ctx.reply(
     "Welcome to metal quest, open the app to start",
     Markup.inlineKeyboard([
-      Markup.button.webApp("Open HyperFold", `${WEBAPP_URL}`),
+      Markup.button.url("Open HyperFold", `${WEBAPP_URL}`),
     ])
   );
 });

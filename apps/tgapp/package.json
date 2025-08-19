@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dvlden/is-webview": "^1.0.0",
     "@metalquest/db-client": "workspace:*",
     "@proton/link": "^4.2.19",
     "@supabase/supabase-js": "^2.49.4",

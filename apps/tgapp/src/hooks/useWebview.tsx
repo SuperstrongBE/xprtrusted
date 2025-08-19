@@ -1,13 +1,11 @@
 "use client";
 import {useEffect, useState} from "react";
+import {isWebview} from "@dvlden/is-webview";
 
 export const useWebview = () => {
-  const [isWebview, setIsWebview] = useState(false);
+  const [isWebviewState, setIsWebviewState] = useState(false);
   useEffect(() => {
-    const isWebview =
-      typeof window !== "undefined" &&
-      navigator.userAgent.indexOf("Telegram") != -1;
-    setIsWebview(isWebview);
+    setIsWebviewState(isWebview(window.navigator.userAgent));
   }, []);
-  return isWebview;
+  return isWebviewState;
 };
