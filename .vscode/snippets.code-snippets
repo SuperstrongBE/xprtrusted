@@ -9,7 +9,7 @@
   		"type $1Props = React.HTMLAttributes<$2> & {}", 
       "export const $1: React.FunctionComponent<$1Props> = ({ children,className}) => { ",
           "const rootClasses = classNames({",
-          "[`\\${className}`]: className,"
+          "[`\\${className}`]: className,",
           
       "});",
       "   return <$3 className={`\\${rootClasses}`}>{children}</$3>",

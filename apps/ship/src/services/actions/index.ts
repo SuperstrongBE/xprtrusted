@@ -59,7 +59,7 @@ async function processActions(action: any) {
 
     questsData.map(async (quest:Tables<'quests'>) => {
       const formulaOutput = runFormulas(quest.condition_formulas || [], action);
-      if (formulaOutput > 0) { 
+      if (formulaOutput.value > 0) { 
         // TODO Get achievement by quest id
         // TODO Upsert on quest
         const { data: accountData, error: accountError } = await dbClient.from('accounts').select('*').eq('actor', action.receipt.receiver).limit(1).single();
@@ -70,12 +70,12 @@ async function processActions(action: any) {
       }
         const { data: achievementInsert, error: achievementError } = await dbClient
         .from('achievements')
-        .insert({
-          quest: quest.id,
-          account: accountData.id,
-          requested_occurence: quest.requested_occurence,
-          current_occurence:formulaOutput
-        })
+        // .insert({
+        //   quest: quest.id,
+        //   account: accountData.id,
+        //   requested_occurence: quest.requested_occurence,
+        //   current_occurence:formulaOutput
+        // })
         .select('*')
         .single();
       if (achievementError) throw new Error(JSON.stringify(achievementError));

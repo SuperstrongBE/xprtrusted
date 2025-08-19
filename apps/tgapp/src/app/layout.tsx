@@ -3,9 +3,9 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import {XPRNProvider} from "xprnkit";
 import {AppHeader} from "../components/03_organisms/app-header";
-import { AppFooter } from "../components/03_organisms/app-footer";
-import { TrustifyProvider } from "@/components/05_providers/UserProvider";
-import { OnboardingDrawer } from "@/components/03_organisms/onboarding-drawer/onboarding-drawer";
+import {AppFooter} from "../components/03_organisms/app-footer";
+import {TrustifyProvider} from "@/components/05_providers/UserProvider";
+import {OnboardingDrawer} from "@/components/03_organisms/onboarding-drawer/onboarding-drawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,23 +33,21 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
         <TrustifyProvider>
-        <XPRNProvider
-          config={{
-            endpoints: ["https://testnet.rockerone.io"],
-            chainId:
-              "71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd",
-            apiMode: "mainnet",
-            dAppName: "MetalX Quest",
-            requesterAccount: "rockeronebp",
-          }}
-        >
-          
-              <OnboardingDrawer className="flex h-dvh relative" >
+          <XPRNProvider
+            config={{
+              endpoints: ["https://testnet.rockerone.io"],
+              chainId:
+                "71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd",
+              apiMode: "mainnet",
+              dAppName: "HyperFold",
+              requesterAccount: "rockeronebp",
+            }}
+          >
+            <OnboardingDrawer className="flex h-dvh relative">
               {children}
-              </OnboardingDrawer>
-          
+            </OnboardingDrawer>
           </XPRNProvider>
-          </TrustifyProvider>
+        </TrustifyProvider>
       </body>
     </html>
   );

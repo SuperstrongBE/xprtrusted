@@ -44,6 +44,12 @@ const formulasFor100XPRCumulativeTransfer = [
   "data.memo:contains('redeem')",                  // output the quantity 10
   "output(data.quantity)"                         // output the quantity 10
 ];
+
+  [
+  "account:eq('xmd.treasury')",                    
+  "data.memo:contains('mint')",                  
+  "output(data.quantity)"                         
+]
                            
 
 console.log('formulasFor100XPRCumulativeTransfer',runFormulas(formulasFor100XPRCumulativeTransfer,transferToPaulActionResult)) //{output: 10,}
@@ -58,39 +64,39 @@ const formulasWithDefaultOutput = [
 
 console.log(runFormulas(formulasWithDefaultOutput,transferToPaulActionResult)) //{output: 10,}
    
-// console.log("\n## EQ ##")
-// console.group()
-// console.log(parseFormula("authorization.0.actor:eq('paul')",transferToPaulActionResult),"false")
-// console.log(parseFormula("authorization.0.actor:eq('rockeronebp')",transferToPaulActionResult),"true")
-// console.groupEnd()
+console.log("\n## EQ ##")
+console.group()
+console.log(parseFormula("authorization.0.actor:eq('paul')",transferToPaulActionResult),"false")
+console.log(parseFormula("authorization.0.actor:eq('rockeronebp')",transferToPaulActionResult),"true")
+console.groupEnd()
 
 
-// console.log("\n## EQ ##")
-// console.group()
-// console.log(parseFormula("data.to:eq('paul')",transferToPaulActionResult),"true")
-// console.log(parseFormula("data.to:eq('paul')",transferToPaulActionResult),"true")
-// console.log(parseFormula("data.to:eq(receipt.receiver)",transferToPaulActionResult),"true")
-// console.log(parseFormula("data.quantity:eq(10)",transferToPaulActionResult),"true")
-// console.groupEnd()
-// console.log("\n## GTE ##")
-// console.group()
-// console.log(parseFormula("data.quantity:gte(10)",transferToPaulActionResult),"true")
-// console.log(parseFormula("data.quantity:gte(10.01)",transferToPaulActionResult),"false")
-// console.log(parseFormula("data.quantity:gte(9.99)",transferToPaulActionResult),"true")
-// console.groupEnd()
+console.log("\n## EQ ##")
+console.group()
+console.log(parseFormula("data.to:eq('paul')",transferToPaulActionResult),"true")
+console.log(parseFormula("data.to:eq('paul')",transferToPaulActionResult),"true")
+console.log(parseFormula("data.to:eq(receipt.receiver)",transferToPaulActionResult),"true")
+console.log(parseFormula("data.quantity:eq(10)",transferToPaulActionResult),"true")
+console.groupEnd()
+console.log("\n## GTE ##")
+console.group()
+console.log(parseFormula("data.quantity:gte(10)",transferToPaulActionResult),"true")
+console.log(parseFormula("data.quantity:gte(10.01)",transferToPaulActionResult),"false")
+console.log(parseFormula("data.quantity:gte(9.99)",transferToPaulActionResult),"true")
+console.groupEnd()
 
-// console.log("\n## LTE ##")
-// console.group()
-// console.log(parseFormula("data.quantity:lte(10)", transferToPaulActionResult), "true")
-// console.log(parseFormula("data.quantity:lte(9.99)",transferToPaulActionResult),"false")
-// console.log(parseFormula("data.quantity:lte(10.01)", transferToPaulActionResult), "true")
-// console.groupEnd()
+console.log("\n## LTE ##")
+console.group()
+console.log(parseFormula("data.quantity:lte(10)", transferToPaulActionResult), "true")
+console.log(parseFormula("data.quantity:lte(9.99)",transferToPaulActionResult),"false")
+console.log(parseFormula("data.quantity:lte(10.01)", transferToPaulActionResult), "true")
+console.groupEnd()
 
-// console.log("\n## OUTPUT ##")
-// console.group()
-// console.log(parseOutput("output(.01)", transferToPaulActionResult), "true")
-// console.log(parseOutput("output(data.quantity)", transferToPaulActionResult), "true")
-// console.groupEnd()
+console.log("\n## OUTPUT ##")
+console.group()
+console.log(parseOutput("output(.01)", transferToPaulActionResult), "true")
+console.log(parseOutput("output(data.quantity)", transferToPaulActionResult), "true")
+console.groupEnd()
 
 
 

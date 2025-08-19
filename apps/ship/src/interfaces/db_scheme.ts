@@ -75,12 +75,53 @@ export type Database = {
           },
         ]
       }
+      init_queue: {
+        Row: {
+          account: string | null
+          attempts: number | null
+          created_at: string
+          id: number
+          last_attempt: string | null
+          processed: number | null
+          status: string | null
+        }
+        Insert: {
+          account?: string | null
+          attempts?: number | null
+          created_at?: string
+          id?: number
+          last_attempt?: string | null
+          processed?: number | null
+          status?: string | null
+        }
+        Update: {
+          account?: string | null
+          attempts?: number | null
+          created_at?: string
+          id?: number
+          last_attempt?: string | null
+          processed?: number | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "init_queue_account_fkey"
+            columns: ["account"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       quests: {
         Row: {
           condition_formulas: string[] | null
           contract: string | null
           created_at: string
           id: string
+          init_condition_formula: string[] | null
+          init_process: string
+          init_rpc_params: string[] | null
           requested_occurence: number | null
           title: string | null
           trigger: string | null
@@ -91,6 +132,9 @@ export type Database = {
           contract?: string | null
           created_at?: string
           id?: string
+          init_condition_formula?: string[] | null
+          init_process?: string
+          init_rpc_params?: string[] | null
           requested_occurence?: number | null
           title?: string | null
           trigger?: string | null
@@ -101,6 +145,9 @@ export type Database = {
           contract?: string | null
           created_at?: string
           id?: string
+          init_condition_formula?: string[] | null
+          init_process?: string
+          init_rpc_params?: string[] | null
           requested_occurence?: number | null
           title?: string | null
           trigger?: string | null
@@ -113,7 +160,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      fetch_achievements_by_actor: {
+        Args: { actor_name: string }
+        Returns: {
+          quest: string
+          title: string
+          total_current_occurence: number
+          requested_occurence: number
+          event_count: number
+          ratio: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

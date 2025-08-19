@@ -1,5 +1,4 @@
 "use client";
-import {useTrustifyContext} from "@/components/05_providers/UserProvider";
 import {Button} from "@/components/button";
 import classNames from "classnames";
 type StartStepProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -18,8 +17,8 @@ export const StartStep: React.FunctionComponent<StartStepProps> = ({
   return (
     <div className={`${rootClasses}`}>
       <h2 className="text-2xl font-bold text-black">
-        Armed with your WebAuth wallet, complete quest and receive exclusive
-        rewards
+        Armed with your WebAuth wallet, complete the process and get access to
+        exclusive content
       </h2>
       <Button onClick={onStepComplete}>Start your quest</Button>
     </div>
