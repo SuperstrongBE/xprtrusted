@@ -107,7 +107,28 @@ bot.command("start", async ctx => {
   ctx.reply(
     "Welcome to metal quest, open the app to start",
     Markup.inlineKeyboard([
-      Markup.button.url("Open HyperFold", `${WEBAPP_URL}`),
+      Markup.button.callback("Telegram mobile", `tg_mobile`),
+      Markup.button.callback("Telegram desktop", `tg_desktop`),
+    ])
+  );
+});
+
+bot.action("tg_mobile", async ctx => {
+  const mobileUrl = `${WEBAPP_URL}?user=${ctx.callbackQuery.from.username}&id=${ctx.callbackQuery.from.id}`;
+  ctx.reply(
+    "Make sure you long press on the button to open the app with your default browser",
+    Markup.inlineKeyboard([
+      Markup.button.url("Open HyperFold mobile", `${mobileUrl}`),
+    ])
+  );
+});
+
+bot.action("tg_desktop", async ctx => {
+  console.log("tg_desktop");
+  ctx.reply(
+    "Open the app to start",
+    Markup.inlineKeyboard([
+      Markup.button.webApp("Open HyperFold desktop", `${WEBAPP_URL}`),
     ])
   );
 });

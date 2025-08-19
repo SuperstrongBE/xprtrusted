@@ -12,13 +12,23 @@ const useAppUser = () => {
   useEffect(() => {
     if (!window) return;
     console.log("checked window ...");
-    
+
     // Dynamic import to avoid SSR issues
-    import("@twa-dev/sdk").then((WebAppModule) => {
+    import("@twa-dev/sdk").then(WebAppModule => {
       const WebApp = WebAppModule.default;
       if (WebApp.initDataUnsafe && WebApp.initDataUnsafe.user) {
         WebApp.expand();
         setTelegramUser(WebApp.initDataUnsafe.user);
+      } else if (location.search) {
+        const url = new URL(location.href);
+        const user = url.searchParams.get("user");
+        const id = url.searchParams.get("id");
+        if (user && id) {
+          setTelegramUser({
+            id: parseInt(id),
+            username: user,
+          });
+        }
       } else {
         const mockedUser = {
           first_name: "Rockerone",

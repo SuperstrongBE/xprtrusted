@@ -1,6 +1,7 @@
 "use client";
 import {Stepper} from "@/components/02_molecules/stepper";
 import {useTrustifyContext} from "@/components/05_providers/UserProvider";
+import useAppUser from "@/hooks/tg-user";
 import classNames from "classnames";
 import {AnimatePresence, motion} from "framer-motion";
 import {useMemo} from "react";
@@ -9,7 +10,7 @@ export const OnboardingStepper: React.FunctionComponent<
   OnboardingStepperProps
 > = ({className}) => {
   const {userState} = useTrustifyContext();
-
+  const {telegramUser} = useAppUser();
   const rootClasses = classNames({
     "w-full flex flex-col justify-start gap-2": true,
     [`${className}`]: className,
@@ -25,7 +26,7 @@ export const OnboardingStepper: React.FunctionComponent<
   return (
     <div className={`${rootClasses}`}>
       <motion.div>
-        <h1 className="text-4xl font-bold">Hey, RockerzOne</h1>
+        <h1 className="text-4xl font-bold">Hey, {telegramUser?.username}</h1>
         <AnimatePresence mode="wait">
           {userState && userState == "start" && (
             <motion.h1

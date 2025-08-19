@@ -67,7 +67,9 @@ export const LinkStep: React.FunctionComponent<LinkStepProps> = ({
         with your
         <b>{session && session.auth.actor.toString()} on XPR Network</b>
       </h2>
-      <Button onClick={pushTrustify}>Verify @rockeronebp</Button>
+      <Button onClick={pushTrustify}>
+        Verify @{session?.auth.actor.toString()}
+      </Button>
     </div>
   );
 };
