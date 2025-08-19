@@ -27,6 +27,7 @@ const useAppUser = () => {
           setTelegramUser({
             id: parseInt(id),
             username: user,
+            first_name: user,
           });
         }
       } else {
