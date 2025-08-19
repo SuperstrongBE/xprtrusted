@@ -1,7 +1,6 @@
+import {UserState} from "@/components/05_providers/UserProvider";
+import {motion} from "framer-motion";
 import React from "react";
-import { motion } from "framer-motion";
-import { UserState } from "@/components/05_providers/UserProvider";
-import classNames from "classnames";
 
 interface GradientDivProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: UserState;
@@ -34,25 +33,17 @@ export const AnimatedGradient: React.FC<GradientDivProps> = ({
   className,
   children,
   style,
-  ...rest
 }) => {
-
-  const rootClasses = classNames({
-    
-    [`${className}`]: className,
-  });
-
   return (
     <motion.div
-    className={className}
+      className={className}
       // Apply the variants to this motion.div so that the background style updates
       variants={gradientVariants}
       initial={variant}
       animate={variant}
       // Customize the transition if desired (keep in mind gradients are not smoothly interpolated)
-      transition={{ duration: 0.5 }}
+      transition={{duration: 0.5}}
       style={{
-        
         ...style,
       }}
     >

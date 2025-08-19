@@ -3,26 +3,25 @@ import classNames from "classnames";
 
 type StepperProps = React.HTMLAttributes<HTMLDivElement> & {
   maxSteps: number;
-  activeStep: number;
+  activeStep?: number;
 };
 export const Stepper: React.FunctionComponent<StepperProps> = ({
   className,
   maxSteps,
-  activeStep
+  activeStep,
 }) => {
   const rootClasses = classNames({
     [`${className}`]: className,
   });
 
-
   return (
     <div className={`${rootClasses}`}>
-      <div
-        className={`relative flex gap-3`}
-        
-      >
+      <div className={`relative flex gap-3`}>
         {new Array(maxSteps).fill(null).map((_, index) => (
-          <StepperItem  active={index<=activeStep} key={index}></StepperItem>
+          <StepperItem
+            active={index <= (activeStep ?? 0)}
+            key={index}
+          ></StepperItem>
         ))}
       </div>
     </div>
@@ -30,25 +29,19 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
 };
 
 type StepperItemProps = React.HTMLAttributes<HTMLDivElement> & {
-  active?: boolean,
+  active?: boolean;
 };
 export const StepperItem: React.FunctionComponent<StepperItemProps> = ({
   active,
-  className
+  className,
 }) => {
   const rootClasses = classNames({
     [`${className}`]: className,
-    'relative': true,
-    
-    'bg-black': true,
-    'opacity-30': !active,
-    'w-20 h-2 rounded-full':true
-    
+    relative: true,
+
+    "bg-black": true,
+    "opacity-30": !active,
+    "w-20 h-2 rounded-full": true,
   });
-  return (
-    <div className={`${rootClasses}`}>
-    
-      
-    </div>
-  );
+  return <div className={`${rootClasses}`}></div>;
 };

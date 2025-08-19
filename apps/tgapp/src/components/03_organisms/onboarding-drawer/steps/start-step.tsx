@@ -5,7 +5,6 @@ type StartStepProps = React.HTMLAttributes<HTMLDivElement> & {
   onStepComplete: () => void;
 };
 export const StartStep: React.FunctionComponent<StartStepProps> = ({
-  children,
   className,
   onStepComplete,
 }) => {

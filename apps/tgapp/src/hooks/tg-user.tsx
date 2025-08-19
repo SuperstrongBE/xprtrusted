@@ -1,7 +1,6 @@
-"use-client";
+"use client";
 import {TrustifyAccount} from "@/interfaces/trustify";
 import {getSHA256Hash, toEOSIOSha256} from "@/utils/hash.utils";
-import WebApp from "@twa-dev/sdk";
 import {WebAppUser} from "@twa-dev/types";
 import {useState, useEffect, useCallback} from "react";
 import {useXPRN} from "xprnkit";
@@ -13,22 +12,27 @@ const useAppUser = () => {
   useEffect(() => {
     if (!window) return;
     console.log("checked window ...");
-    if (WebApp.initDataUnsafe && WebApp.initDataUnsafe.user) {
-      WebApp.expand();
-      setTelegramUser(WebApp.initDataUnsafe.user);
-    } else {
-      const mockedUser = {
-        first_name: "Rockerone",
-        id: 600190930,
-        language_code: "fr",
-        last_name: "@XPRNetwork (DONT DM ME)",
-        photo_url:
-          "https://t.me/i/userpic/320/n1EagZ7JFy8mSrdGAWdxwJx5JM_txHjHcA5TSceQMCo.svg",
-        username: "rockerzOne",
-      };
-      console.log(mockedUser);
-      setTelegramUser(mockedUser);
-    }
+    
+    // Dynamic import to avoid SSR issues
+    import("@twa-dev/sdk").then((WebAppModule) => {
+      const WebApp = WebAppModule.default;
+      if (WebApp.initDataUnsafe && WebApp.initDataUnsafe.user) {
+        WebApp.expand();
+        setTelegramUser(WebApp.initDataUnsafe.user);
+      } else {
+        const mockedUser = {
+          first_name: "Rockerone",
+          id: 600190930,
+          language_code: "fr",
+          last_name: "@XPRNetwork (DONT DM ME)",
+          photo_url:
+            "https://t.me/i/userpic/320/n1EagZ7JFy8mSrdGAWdxwJx5JM_txHjHcA5TSceQMCo.svg",
+          username: "rockerzOne",
+        };
+        console.log(mockedUser);
+        setTelegramUser(mockedUser);
+      }
+    });
   }, [setTelegramUser]);
 
   const fetchTrustifyUser = useCallback(async () => {

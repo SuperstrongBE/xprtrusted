@@ -1,5 +1,5 @@
 "use client";
-import { useTrustifyContext } from "@/components/05_providers/UserProvider";
+import {useTrustifyContext} from "@/components/05_providers/UserProvider";
 import {Button} from "@/components/button";
 import classNames from "classnames";
 import {useCallback} from "react";
@@ -8,24 +8,23 @@ type ConnectStepProps = React.HTMLAttributes<HTMLDivElement> & {
   onStepComplete: () => void;
 };
 export const ConnectStep: React.FunctionComponent<ConnectStepProps> = ({
-  children,
   className,
   onStepComplete,
 }) => {
   const rootClasses = classNames({
-    "grid grid-cols-1 gap-5":true,
+    "grid grid-cols-1 gap-5": true,
     [`${className}`]: className,
   });
 
-  const { connect } = useXPRN();
-  const {setUserState} = useTrustifyContext()
+  const {connect} = useXPRN();
+  const {setUserState} = useTrustifyContext();
 
   const onConnect = useCallback(() => {
-    setUserState('processing');
+    setUserState("processing");
     connect(session => {
       if (session) onStepComplete();
     });
-  }, [connect]);
+  }, [connect, onStepComplete, setUserState]);
 
   return (
     <div className={`${rootClasses}`}>

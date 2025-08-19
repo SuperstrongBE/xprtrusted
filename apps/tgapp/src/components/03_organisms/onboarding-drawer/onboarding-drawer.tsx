@@ -1,23 +1,15 @@
 "use client";
 import {useTrustifyContext} from "@/components/05_providers/UserProvider";
-import {Button} from "@/components/button";
 import classNames from "classnames";
 import {AnimatePresence, LayoutGroup, motion} from "framer-motion";
-import {StartStep} from "./steps/start-step";
-import {VerifyStep} from "./steps/verify-step";
+import {AnimatedGradient} from "../animated-gradient/animated-gradient";
+import {TabBar} from "../tab-bar/tab-bar";
 import {ConnectStep} from "./steps/connect-step";
 import {LinkStep} from "./steps/link-step";
-import {AnimatedGradient} from "../animated-gradient/animated-gradient";
-import {PrepareStep} from "./steps/prepare-step";
 import {LoadingStep} from "./steps/loading-step";
-import { TabBar } from "../tab-bar/tab-bar";
-
-// Optional: Container variants if you want to stagger children
-const containerVariants = {
-  animate: {
-    transition: {staggerChildren: 0.2},
-  },
-};
+import {PrepareStep} from "./steps/prepare-step";
+import {StartStep} from "./steps/start-step";
+import {VerifyStep} from "./steps/verify-step";
 
 // Heading variants to animate each header in/out
 const headingVariants = {
@@ -39,8 +31,6 @@ const drawerContainerVariants = {
     opacity: 1,
   },
 };
-
-
 
 export const OnboardingDrawer: React.FunctionComponent<
   React.HTMLAttributes<HTMLDivElement>
@@ -93,9 +83,7 @@ export const OnboardingDrawer: React.FunctionComponent<
 
             <motion.div
               key="tab-bar"
-              
               className="tab-bar flex flex-col w-full justify-center items-center z-10"
-              
             >
               <TabBar />
             </motion.div>

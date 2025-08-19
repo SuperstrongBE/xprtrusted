@@ -1,14 +1,13 @@
 "use client";
 import {Stepper} from "@/components/02_molecules/stepper";
 import {useTrustifyContext} from "@/components/05_providers/UserProvider";
-import useAppUser from "@/hooks/tg-user";
 import classNames from "classnames";
 import {AnimatePresence, motion} from "framer-motion";
-import { useMemo } from "react";
+import {useMemo} from "react";
 type OnboardingStepperProps = React.HTMLAttributes<HTMLDivElement> & {};
 export const OnboardingStepper: React.FunctionComponent<
   OnboardingStepperProps
-> = ({children, className}) => {
+> = ({className}) => {
   const {userState} = useTrustifyContext();
 
   const rootClasses = classNames({
@@ -16,12 +15,12 @@ export const OnboardingStepper: React.FunctionComponent<
     [`${className}`]: className,
   });
 
-	const stepIndex = useMemo(() => {
-		if (userState == 'connect') return 0;
-		if (userState == 'verify') return 1;
-		if (userState == 'link') return 2;
-		return 0;
-  },[userState]);
+  const stepIndex = useMemo(() => {
+    if (userState == "connect") return 0;
+    if (userState == "verify") return 1;
+    if (userState == "link") return 2;
+    return 0;
+  }, [userState]);
 
   return (
     <div className={`${rootClasses}`}>

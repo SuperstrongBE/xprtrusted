@@ -1,8 +1,5 @@
 "use client";
-import {
-  UserState,
-  useTrustifyContext,
-} from "@/components/05_providers/UserProvider";
+import {useTrustifyContext} from "@/components/05_providers/UserProvider";
 import classNames from "classnames";
 import {motion} from "framer-motion";
 import Image from "next/image";

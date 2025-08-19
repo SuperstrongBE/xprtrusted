@@ -1,6 +1,5 @@
 "use client";
 import {useTrustifyContext} from "@/components/05_providers/UserProvider";
-import {Button} from "@/components/button";
 import useAppUser from "@/hooks/tg-user";
 import {wait} from "@/utils/wait.utils";
 import classNames from "classnames";
@@ -45,7 +44,7 @@ export const PrepareStep: React.FunctionComponent<PrepareStepProps> = ({
           });
         });
     }
-  }, [telegramUser]);
+  }, [telegramUser, trustifyUser, fetchTrustifyUser, setUserState]);
 
   return (
     <div className={`${rootClasses}`}>
