@@ -1,10 +1,10 @@
 "use client";
 
 import {OnboardingStepper} from "@/components/03_organisms/onboarding-stepper/onboarding-stepper";
-import {useWebview} from "@/hooks/useWebview";
+import {useIsWebView} from "@/hooks/useWebview";
 
 export default function Home() {
-  const isWebview = useWebview();
+  const isWebview = useIsWebView();
   return (
     <>
       <OnboardingStepper></OnboardingStepper>
