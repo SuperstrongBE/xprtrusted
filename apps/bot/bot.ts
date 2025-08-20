@@ -106,7 +106,7 @@ bot.command("start", async ctx => {
     sessionManager.set(hash, sessionData);
     ctx.session = sessionData;
   }
-  const mobileUrl = `${WEBAPP_URL}?user=${ctx.update.message.from.username}`;
+  const mobileUrl = `${WEBAPP_URL}?user=${ctx.update.message.from.username}&id=${ctx.update.message.from.id}`;
   ctx.reply(
     "Trusting process is about linking your telegram account with your XPR Network account with a layer of channel anonymity. \n\nTo start, open the app with the button below",
     Markup.inlineKeyboard([
