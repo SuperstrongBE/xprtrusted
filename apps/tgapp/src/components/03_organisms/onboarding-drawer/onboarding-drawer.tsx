@@ -8,10 +8,12 @@ import {ConnectStep} from "./steps/connect-step";
 import {LinkStep} from "./steps/link-step";
 import {LoadingStep} from "./steps/loading-step";
 import {PrepareStep} from "./steps/prepare-step";
-import {StartStep} from "./steps/start-step";
+
 import {VerifyStep} from "./steps/verify-step";
 import {Button} from "@/components/button";
 import {useXPRN} from "xprnkit";
+
+import {WebViewFallBack} from "./steps/start-step";
 
 // Heading variants to animate each header in/out
 const headingVariants = {
@@ -38,6 +40,7 @@ export const OnboardingDrawer: React.FunctionComponent<
   React.HTMLAttributes<HTMLDivElement>
 > = ({children, className}) => {
   const {userState, setUserState} = useTrustifyContext();
+
   const {disconnect} = useXPRN();
 
   // Let the grid rows adjust automatically.
@@ -94,6 +97,20 @@ export const OnboardingDrawer: React.FunctionComponent<
             {/* AnimatePresence for the drawer’s content */}
             <motion.div className="bg-amber-50 px-5 pb-5 pt-15 w-full  relative">
               <AnimatePresence mode="wait">
+                {userState === "webview" && (
+                  <motion.div
+                    key="prepare"
+                    variants={headingVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="grid gap-5 grid-cols-1"
+                    layoutId="onboaring"
+                    layout="position"
+                  >
+                    <WebViewFallBack />
+                  </motion.div>
+                )}
                 {userState === "prepare" && (
                   <motion.div
                     key="prepare"
@@ -122,20 +139,7 @@ export const OnboardingDrawer: React.FunctionComponent<
                     <LoadingStep />
                   </motion.div>
                 )}
-                {userState === "start" && (
-                  <motion.div
-                    key="start"
-                    variants={headingVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    className="grid gap-5 grid-cols-1"
-                    layoutId="onboaring"
-                    layout="position"
-                  >
-                    <StartStep onStepComplete={() => setUserState("connect")} />
-                  </motion.div>
-                )}
+
                 {userState === "connect" && (
                   <motion.div
                     key="connect"

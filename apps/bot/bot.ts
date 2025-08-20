@@ -110,7 +110,7 @@ bot.command("start", async ctx => {
   ctx.reply(
     "Trusting process is about linking your telegram account with your XPR Network account with a layer of channel anonymity. \n\nTo start, open the app with the button below",
     Markup.inlineKeyboard([
-      Markup.button.url("Let's get trusted", `${mobileUrl}`),
+      Markup.button.webApp("Let's get trusted", `${mobileUrl}`),
     ])
   );
 });

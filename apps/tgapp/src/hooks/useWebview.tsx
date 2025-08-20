@@ -1,13 +1,7 @@
 "use client";
 import {useEffect, useState} from "react";
 
-type WebViewContext =
-  | "safari"
-  | "chrome"
-  | "telegram"
-  | "discord"
-  | "webview"
-  | "browser";
+type WebViewContext = "browser" | "webview";
 
 interface WebViewResult {
   isWebView: boolean;
@@ -21,6 +15,7 @@ export function useIsWebView(): WebViewResult {
     if (typeof window === "undefined" || typeof navigator === "undefined") {
       setIsWebView(false);
       setContext("browser");
+      return;
     }
 
     const ua =
@@ -31,56 +26,30 @@ export function useIsWebView(): WebViewResult {
     const isIOS = /iPad|iPhone|iPod/.test(ua);
     const isAndroid = /Android/.test(ua);
 
-    // Telegram WebView detection
-    if (
+    // Check for any WebView indicators
+    const isWebViewDetected =
+      // Telegram WebView
       /TelegramWebView/.test(ua) ||
       window.Telegram?.WebApp !== undefined ||
-      /tgWebAppPlatform/.test(ua)
-    ) {
-      setIsWebView(true);
-      setContext("webview");
-    } else if (/DiscordBot/.test(ua) || /Discord/.test(ua)) {
-      setIsWebView(true);
-      setContext("webview");
-    } else if (
-      isIOS &&
-      /Safari/.test(ua) &&
-      !/CriOS/.test(ua) &&
-      !/FxiOS/.test(ua) &&
-      !/Chrome/.test(ua)
-    ) {
-      setIsWebView(false);
-      setContext("browser");
-    } else if (
-      isIOS &&
-      !/Safari/.test(ua) &&
-      !/CriOS/.test(ua) &&
-      !/FxiOS/.test(ua)
-    ) {
-      setIsWebView(true);
-      setContext("webview");
-    } else if (
-      isAndroid &&
-      /Chrome/.test(ua) &&
-      /Safari/.test(ua) &&
-      !/wv/.test(ua)
-    ) {
-      setIsWebView(false);
-      setContext("browser");
-    } else if (
-      isAndroid &&
-      (/; wv\)/.test(ua) ||
-        (/Version\/[\d.]+ Chrome\/[\d.]+ Mobile/.test(ua) &&
-          !/Safari/.test(ua)))
-    ) {
+      /tgWebAppPlatform/.test(ua) ||
+      // Discord WebView
+      /DiscordBot/.test(ua) ||
+      /Discord/.test(ua) ||
+      // iOS WebView (embedded in app)
+      (isIOS && !/Safari/.test(ua) && !/CriOS/.test(ua) && !/FxiOS/.test(ua)) ||
+      // Android WebView
+      (isAndroid &&
+        (/; wv\)/.test(ua) ||
+          (/Version\/[\d.]+ Chrome\/[\d.]+ Mobile/.test(ua) &&
+            !/Safari/.test(ua))));
+
+    if (isWebViewDetected) {
       setIsWebView(true);
       setContext("webview");
     } else {
       setIsWebView(false);
       setContext("browser");
     }
-
-    // Default to browser for everything else
   }, []);
   return {isWebView, context};
 }

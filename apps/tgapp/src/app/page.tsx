@@ -1,27 +1,13 @@
 "use client";
+import {OnboardingDrawer} from "@/components/03_organisms/onboarding-drawer/onboarding-drawer";
 import {OnboardingStepper} from "@/components/03_organisms/onboarding-stepper/onboarding-stepper";
-import {Button} from "@/components/button";
-import {useIsWebView} from "@/hooks/useWebview";
 
 export default function Home() {
-  const {isWebView, context} = useIsWebView();
-
   return (
     <>
-      {context}
-      {isWebView ? "webview" : "browser"}
-      {!isWebView && context === "browser" ? (
+      <OnboardingDrawer className="flex h-dvh relative">
         <OnboardingStepper></OnboardingStepper>
-      ) : (
-        <Button
-          className="flex flex-col gap-4 p-4 bg-red-500 rounded-lg"
-          onClick={() => {
-            window.open("http://metal-quest-tg-app.vercel.app", "_blank");
-          }}
-        >
-          <p>Start the trusting process on your browser</p>
-        </Button>
-      )}
+      </OnboardingDrawer>
     </>
   );
 }

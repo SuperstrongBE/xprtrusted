@@ -36,9 +36,7 @@ export default function RootLayout({
               requesterAccount: "rockeronebp",
             }}
           >
-            <OnboardingDrawer className="flex h-dvh relative">
-              {children}
-            </OnboardingDrawer>
+            {children}
           </XPRNProvider>
         </TrustifyProvider>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 
+import {useIsWebView} from "@/hooks/useWebview";
 import {
   createContext,
   FC,
@@ -36,7 +37,8 @@ export type UserState =
   | "verify"
   | "link"
   | "trusted"
-  | "processing";
+  | "processing"
+  | "webview";
 
 // Create the provider component.
 export const TrustifyProvider: FC<UserProviderProviderProps> = ({children}) => {
@@ -44,6 +46,7 @@ export const TrustifyProvider: FC<UserProviderProviderProps> = ({children}) => {
   // Right now, we are providing an UserProvider object.
 
   const [userState, setUserState] = useState<UserState>("prepare");
+  const {isWebView, context} = useIsWebView();
 
   const providerValue: TrustifyContextType = useMemo(() => {
     return {
@@ -53,8 +56,13 @@ export const TrustifyProvider: FC<UserProviderProviderProps> = ({children}) => {
   }, [userState]);
 
   useEffect(() => {
-    setUserState("prepare");
-  }, [setUserState]);
+    if (isWebView && context === "webview") {
+      setUserState("webview");
+      console.log("webview");
+    } else {
+      setUserState("prepare");
+    }
+  }, [setUserState, isWebView]);
 
   return (
     <TrustifyProviderContext.Provider value={providerValue}>

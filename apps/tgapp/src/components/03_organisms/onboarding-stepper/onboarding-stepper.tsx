@@ -4,7 +4,12 @@ import {useTrustifyContext} from "@/components/05_providers/UserProvider";
 // import useAppUser from "@/hooks/tg-user";
 import classNames from "classnames";
 import {AnimatePresence, motion} from "framer-motion";
-import {LucideLink, LucideLock, LucideShieldUser} from "lucide-react";
+import {
+  LucideArrowUpRight,
+  LucideLink,
+  LucideLock,
+  LucideShieldUser,
+} from "lucide-react";
 import {useMemo} from "react";
 import {MessageScreen} from "./screens/message-screen";
 import {ProcessingScreen} from "./screens/processing-screen";
@@ -51,6 +56,20 @@ export const OnboardingStepper: React.FunctionComponent<
           {userState && userState == "processing" && (
             <motion.div className="flex flex-col flex-grow  justify-center items-center  gap-3">
               <ProcessingScreen />
+            </motion.div>
+          )}
+          {userState && userState == "webview" && (
+            <motion.div className="flex flex-col flex-grow  justify-center items-center  gap-3">
+              <MessageScreen
+                title="Redirection needed"
+                message={[
+                  "Telegram makes a fuss.",
+                  "WebAuth on mobile’s sus.",
+                  "So we redirect the way.",
+                  "To keep the login okay.",
+                ]}
+                icon={<LucideArrowUpRight className="w-16 h-16 stroke-white" />}
+              />
             </motion.div>
           )}
           {userState && userState == "connect" && (
