@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <>
       {context}
+      {isWebView ? "webview" : "browser"}
       {!isWebView && context === "browser" ? (
         <OnboardingStepper></OnboardingStepper>
       ) : (

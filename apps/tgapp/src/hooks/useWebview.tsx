@@ -1,5 +1,5 @@
 "use client";
-import {useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 
 type WebViewContext =
   | "safari"
@@ -15,9 +15,12 @@ interface WebViewResult {
 }
 
 export function useIsWebView(): WebViewResult {
-  return useMemo(() => {
+  const [isWebView, setIsWebView] = useState<boolean>(false);
+  const [context, setContext] = useState<WebViewContext>("browser");
+  useEffect(() => {
     if (typeof window === "undefined" || typeof navigator === "undefined") {
-      return {isWebView: false, context: "browser"};
+      setIsWebView(false);
+      setContext("browser");
     }
 
     const ua =
@@ -34,12 +37,14 @@ export function useIsWebView(): WebViewResult {
       window.Telegram?.WebApp !== undefined ||
       /tgWebAppPlatform/.test(ua)
     ) {
-      return {isWebView: true, context: "webview"};
+      setIsWebView(true);
+      setContext("webview");
     }
 
     // Discord WebView detection
     if (/DiscordBot/.test(ua) || /Discord/.test(ua)) {
-      return {isWebView: true, context: "webview"};
+      setIsWebView(true);
+      setContext("webview");
     }
 
     // iOS Safari - regular browser
@@ -50,17 +55,20 @@ export function useIsWebView(): WebViewResult {
       !/FxiOS/.test(ua) &&
       !/Chrome/.test(ua)
     ) {
-      return {isWebView: false, context: "browser"};
+      setIsWebView(false);
+      setContext("browser");
     }
 
     // iOS WebView (embedded in app)
     if (isIOS && !/Safari/.test(ua) && !/CriOS/.test(ua) && !/FxiOS/.test(ua)) {
-      return {isWebView: true, context: "webview"};
+      setIsWebView(true);
+      setContext("webview");
     }
 
     // Android Chrome - regular browser
     if (isAndroid && /Chrome/.test(ua) && /Safari/.test(ua) && !/wv/.test(ua)) {
-      return {isWebView: false, context: "browser"};
+      setIsWebView(false);
+      setContext("browser");
     }
 
     // Android WebView (embedded in app)
@@ -70,10 +78,13 @@ export function useIsWebView(): WebViewResult {
         (/Version\/[\d.]+ Chrome\/[\d.]+ Mobile/.test(ua) &&
           !/Safari/.test(ua)))
     ) {
-      return {isWebView: true, context: "webview"};
+      setIsWebView(true);
+      setContext("webview");
     }
 
     // Default to browser for everything else
-    return {isWebView: false, context: "browser"};
+    setIsWebView(false);
+    setContext("browser");
   }, []);
+  return {isWebView, context};
 }
