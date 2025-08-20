@@ -34,12 +34,12 @@ export function useIsWebView(): WebViewResult {
       window.Telegram?.WebApp !== undefined ||
       /tgWebAppPlatform/.test(ua)
     ) {
-      return {isWebView: true, context: "telegram"};
+      return {isWebView: true, context: "webview"};
     }
 
     // Discord WebView detection
     if (/DiscordBot/.test(ua) || /Discord/.test(ua)) {
-      return {isWebView: true, context: "discord"};
+      return {isWebView: true, context: "webview"};
     }
 
     // iOS Safari - regular browser

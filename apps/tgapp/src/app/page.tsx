@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <>
-      {isWebView && context === "browser" ? (
+      {!isWebView && context === "browser" ? (
         <OnboardingStepper></OnboardingStepper>
       ) : (
         <div
@@ -19,7 +19,7 @@ export default function Home() {
           <p>Start the trusting process on your browser</p>
         </div>
       )}
-      <p>{isWebView && context === "browser" ? "browser" : "webview"}</p>
+      <p>{!isWebView && context === "browser" ? "browser" : "webview"}</p>
       <p>{context}</p>
     </>
     // <ButtonTest></ButtonTest>
