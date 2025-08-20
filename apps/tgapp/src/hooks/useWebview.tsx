@@ -1,10 +1,23 @@
 "use client";
 import {useMemo} from "react";
 
-export function useIsWebView(): boolean {
+type WebViewContext =
+  | "safari"
+  | "chrome"
+  | "telegram"
+  | "discord"
+  | "webview"
+  | "browser";
+
+interface WebViewResult {
+  isWebView: boolean;
+  context: WebViewContext;
+}
+
+export function useIsWebView(): WebViewResult {
   return useMemo(() => {
     if (typeof window === "undefined" || typeof navigator === "undefined") {
-      return false;
+      return {isWebView: false, context: "browser"};
     }
 
     const ua =
@@ -12,30 +25,55 @@ export function useIsWebView(): boolean {
       navigator.vendor ||
       (window as unknown as {opera: string}).opera;
 
+    const isIOS = /iPad|iPhone|iPod/.test(ua);
+    const isAndroid = /Android/.test(ua);
+
     // Telegram WebView detection
-    const isTelegramWebView =
+    if (
       /TelegramWebView/.test(ua) ||
       window.Telegram?.WebApp !== undefined ||
-      /tgWebAppPlatform/.test(ua);
+      /tgWebAppPlatform/.test(ua)
+    ) {
+      return {isWebView: true, context: "telegram"};
+    }
 
-    const isIOS = /iPad|iPhone|iPod/.test(ua);
-    const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
-    const isUIWebView = isIOS && !isSafari && !/FxiOS|Chrome/.test(ua);
+    // Discord WebView detection
+    if (/DiscordBot/.test(ua) || /Discord/.test(ua)) {
+      return {isWebView: true, context: "discord"};
+    }
 
-    const isAndroid = /Android/.test(ua);
-    // Improved Android WebView detection
-    const isAndroidWebView =
-      /; wv\)/.test(ua) ||
-      (/Android/.test(ua) &&
-        /Version\/[\d.]+ Chrome\/[\d.]+ Mobile/.test(ua) &&
-        !/Safari/.test(ua)) ||
-      (/Android/.test(ua) && /Chrome/.test(ua) && /Version/.test(ua));
+    // iOS Safari - regular browser
+    if (
+      isIOS &&
+      /Safari/.test(ua) &&
+      !/CriOS/.test(ua) &&
+      !/FxiOS/.test(ua) &&
+      !/Chrome/.test(ua)
+    ) {
+      return {isWebView: false, context: "browser"};
+    }
 
-    const isChromeInWebView =
-      isAndroid && /Chrome\/[\d.]+ Mobile/.test(ua) && !/Safari/.test(ua);
+    // iOS WebView (embedded in app)
+    if (isIOS && !/Safari/.test(ua) && !/CriOS/.test(ua) && !/FxiOS/.test(ua)) {
+      return {isWebView: true, context: "webview"};
+    }
 
-    return (
-      isTelegramWebView || isUIWebView || isAndroidWebView || isChromeInWebView
-    );
+    // Android Chrome - regular browser
+    if (isAndroid && /Chrome/.test(ua) && /Safari/.test(ua) && !/wv/.test(ua)) {
+      return {isWebView: false, context: "browser"};
+    }
+
+    // Android WebView (embedded in app)
+    if (
+      isAndroid &&
+      (/; wv\)/.test(ua) ||
+        (/Version\/[\d.]+ Chrome\/[\d.]+ Mobile/.test(ua) &&
+          !/Safari/.test(ua)))
+    ) {
+      return {isWebView: true, context: "webview"};
+    }
+
+    // Default to browser for everything else
+    return {isWebView: false, context: "browser"};
   }, []);
 }

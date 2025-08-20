@@ -4,7 +4,7 @@ import {OnboardingStepper} from "@/components/03_organisms/onboarding-stepper/on
 import {useIsWebView} from "@/hooks/useWebview";
 
 export default function Home() {
-  const isWebview = useIsWebView();
+  const {isWebView, context} = useIsWebView();
   return (
     <>
       <div
@@ -16,7 +16,8 @@ export default function Home() {
         <p>Hey open this in pure browser</p>
       </div>
       <OnboardingStepper></OnboardingStepper>
-      <p>{isWebview ? "Webview" : "Not webview"}</p>
+      <p>{isWebView && context === "browser" ? "browser" : "webview"}</p>
+      <p>{context}</p>
     </>
     // <ButtonTest></ButtonTest>
   );
