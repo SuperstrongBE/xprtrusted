@@ -7,6 +7,9 @@ export default function Home() {
   const isWebview = useIsWebView();
   return (
     <>
+      <div className="flex flex-col gap-4 p-4 bg-red-500 rounded-lg">
+        <p>Hey open this in pure browser</p>
+      </div>
       <OnboardingStepper></OnboardingStepper>
       <p>{isWebview ? "Webview" : "Not webview"}</p>
     </>

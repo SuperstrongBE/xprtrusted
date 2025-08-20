@@ -1,20 +1,8 @@
 module.exports = {
   apps: [
-    {
-      name: "quests.tables",
-      script: "./dist/services/blocks/index.js",
-      watch: false,
-      autorestart: false,
-      env: {
-        NODE_ENV: "development",
-      },
-      env_production: {
-        NODE_ENV: "production",
-      },
-    },
     // {
     //   name: "quests.tables",
-    //   script: "./dist/services/tables/index.js",
+    //   script: "./dist/services/blocks/index.js",
     //   watch: false,
     //   autorestart: false,
     //   env: {
@@ -24,6 +12,18 @@ module.exports = {
     //     NODE_ENV: "production",
     //   },
     // },
+    {
+      name: "accounts.tables",
+      script: "./dist/services/tables/accounts.js",
+      watch: false,
+      autorestart: false,
+      env: {
+        NODE_ENV: "development",
+      },
+      env_production: {
+        NODE_ENV: "production",
+      },
+    },
     // {
     //   name: "quests.actions",
     //   script: "./dist/services/actions/index.js",

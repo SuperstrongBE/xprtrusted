@@ -18,6 +18,7 @@ export const isAccountTrusted = async (hash: string): Promise<boolean> => {
       upper_bound: toEOSIOSha256(hash),
     })
     .then((res: {rows: Tables<"TrustedAccount">[]}) => {
+      console.log(res);
       if (res.rows.length > 0) {
         const trustedKey = res.rows[0].trustedKey;
         return trustedKey == hash;

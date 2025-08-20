@@ -1,11 +1,47 @@
-import {Markup, Telegraf} from "telegraf";
+import {Context, Markup, Scenes, session, Telegraf} from "telegraf";
 import * as dotenv from "dotenv";
 import {getDbClient, type Database, type Tables} from "@metalquest/db-client";
 import {getSHA256Hash} from "./utils/sha256";
 import {isAccountTrusted} from "./utils/account-lookup";
 import {message} from "telegraf/filters";
+import type {SceneSessionData} from "telegraf/scenes";
 
 dotenv.config();
+
+interface SessionData {
+  user_id: string;
+  trustedHash: string;
+  isTrusted: boolean;
+  socket: WebSocket;
+}
+
+interface BotSession
+  extends Scenes.SceneSession<SceneSessionData>,
+    SessionData {
+  // will be available under `ctx.session.mySessionProp`
+}
+
+interface SessionContext extends Context {
+  session: BotSession;
+}
+
+class SessionManager {
+  private store = new Map<string, SessionData>();
+
+  get(hash: string) {
+    return this.store.get(hash);
+  }
+
+  set(hash: string, data: SessionData) {
+    this.store.set(hash, data);
+  }
+
+  getAllSessions() {
+    return Array.from(this.store.entries());
+  }
+}
+
+export const sessionManager = new SessionManager();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const WEBAPP_URL = process.env.WEBAPP_URL;
@@ -25,66 +61,12 @@ if (!SERVICE_TOKEN) {
   throw new Error("SERVICE_TOKEN must be provided in .env file");
 }
 
-const bot = new Telegraf(BOT_TOKEN);
-
-const dbClient = getDbClient<Database>(DB_URL, SERVICE_TOKEN);
-
-dbClient.realtime
-  .channel("achievements")
-  .on(
-    "postgres_changes",
-    {event: "INSERT", schema: "public", table: "achievements"},
-    async (payload: any) => {
-      console.log(payload);
-      if (!payload.new) return;
-      if (!payload.new.account) return;
-      if (!payload.new.quest) return;
-      const {data: accountData, error: accountError} = await dbClient
-        .from("accounts")
-        .select("*")
-        .eq("id", payload.new.account)
-        .limit(1)
-        .single();
-      const {data: questData, error: questError} = await dbClient
-        .from("quests")
-        .select("*")
-        .eq("id", payload.new.quest)
-        .limit(1)
-        .single();
-      console.log(accountError, questError);
-      if (accountError) return;
-      console.log(accountData, questData);
-      if (accountData && accountData.userId && questData && questData.title) {
-        console.log(`before sending message to ${accountData.userId}`);
-        const sent = await bot.telegram.sendMessage(
-          accountData.userId,
-          `You just completed: ${questData.title}`
-        );
-        console.log(sent);
-      }
-    }
-  )
-  .subscribe();
-
-// bot.use(async (ctx, next) => {
-//   console.log(ctx.update, "update");
-//   if (ctx.update.text == "/start") {
-//     next();
-//     return;
-//   }
-//   const hash = await getSHA256Hash(ctx.update.message.from.id.toString());
-//   const isTrusted = await isAccountTrusted(hash);
-//   if (!isTrusted) {
-//     await ctx.reply(
-//       `@${ctx.update.message.from.username}, You are not trusted, please register with @xprtrustbot`
-//     );
-//     await ctx.deleteMessage(ctx.update.message.message_id);
-//     return;
-//   } else {
-//     await ctx.reply("You are trusted");
-//     await next();
-//   }
-// });
+const bot = new Telegraf<SessionContext>(BOT_TOKEN);
+bot.use(session());
+bot.use(async (ctx, next) => {
+  console.log("something");
+  await next();
+});
 
 bot.on("chat_join_request", async ctx => {
   const msg = ctx.channelPost;
@@ -93,19 +75,40 @@ bot.on("chat_join_request", async ctx => {
 
 bot.command("start", async ctx => {
   console.log(ctx.text, "text");
-  const payload = ctx.text.substring(6);
-  if (payload.length) {
-    const url = Buffer.from(payload, "base64").toString();
-    const params = Object.fromEntries(new URLSearchParams(url).entries());
-
-    // Result: { a: '123', b: 'gdfgd-gdfgdfgdf' }
-    console.log(url);
-  } else {
-    console.log("no payload");
-    // Start bot without payload
+  const hash = await getSHA256Hash(ctx.update.message.from.id.toString());
+  const isTrusted = await isAccountTrusted(hash);
+  if (!ctx.session) {
+    const socket = new WebSocket("http://0.0.0.0:3006/");
+    socket.onmessage = function (event) {
+      console.log("received: %s", event.data);
+      const data = JSON.parse(event.data);
+      const sessionData = sessionManager.get(data.hash.toLowerCase());
+      if (sessionData) {
+        console.log("sending message to user");
+        bot.telegram.sendMessage(sessionData.user_id, "You are trusted");
+      }
+    };
+    socket.onopen = function (event) {
+      console.log("connected to relay");
+    };
+    socket.onclose = function (event) {
+      console.log("disconnected from relay");
+    };
+    socket.onerror = function (event) {
+      console.log("error: %s", event);
+    };
+    const sessionData: SessionData = {
+      user_id: ctx.update.message.from.id.toString(),
+      trustedHash: hash,
+      isTrusted: isTrusted,
+      socket: socket,
+    };
+    sessionManager.set(hash, sessionData);
+    ctx.session = sessionData;
   }
+
   ctx.reply(
-    "Welcome to metal quest, open the app to start",
+    "Welcome on HyperFold, let's start by telling what your Telegram device is",
     Markup.inlineKeyboard([
       Markup.button.callback("Telegram mobile", `tg_mobile`),
       Markup.button.callback("Telegram desktop", `tg_desktop`),
@@ -116,7 +119,7 @@ bot.command("start", async ctx => {
 bot.action("tg_mobile", async ctx => {
   const mobileUrl = `${WEBAPP_URL}?user=${ctx.callbackQuery.from.username}&id=${ctx.callbackQuery.from.id}`;
   ctx.reply(
-    "Make sure you long press on the button to open the app with your default browser",
+    "⚠️ Make sure you long press on the button to open the app with your default browser",
     Markup.inlineKeyboard([
       Markup.button.url("Open HyperFold mobile", `${mobileUrl}`),
     ])
@@ -150,6 +153,10 @@ bot.on(message("text"), async ctx => {
       return;
     }
   }
+});
+
+bot.on(message("migrate_to_chat_id"), async ctx => {
+  console.log(ctx.update.message.migrate_to_chat_id);
 });
 
 // Start the bot
