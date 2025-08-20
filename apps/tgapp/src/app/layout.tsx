@@ -1,5 +1,4 @@
 "use client";
-import {OnboardingDrawer} from "@/components/03_organisms/onboarding-drawer/onboarding-drawer";
 import {TrustifyProvider} from "@/components/05_providers/UserProvider";
 import {Geist, Geist_Mono} from "next/font/google";
 import {XPRNProvider} from "xprnkit";
