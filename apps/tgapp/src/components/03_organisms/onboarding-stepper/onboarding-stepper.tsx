@@ -7,7 +7,7 @@ import {AnimatePresence, motion} from "framer-motion";
 import {LucideLink, LucideLock, LucideShieldUser} from "lucide-react";
 import {useMemo} from "react";
 import {MessageScreen} from "./screens/message-screen";
-import {PrepareScreen} from "./screens/prepare-screen";
+import {ProcessingScreen} from "./screens/processing-screen";
 import {useXPRN} from "xprnkit";
 import {CompleteScreen} from "./screens/complete-screen";
 
@@ -45,7 +45,12 @@ export const OnboardingStepper: React.FunctionComponent<
         <AnimatePresence mode="wait">
           {userState && userState == "prepare" && (
             <motion.div className="flex flex-col flex-grow  justify-center items-center  gap-3">
-              <PrepareScreen />
+              <ProcessingScreen message="Checking your account..." />
+            </motion.div>
+          )}
+          {userState && userState == "processing" && (
+            <motion.div className="flex flex-col flex-grow  justify-center items-center  gap-3">
+              <ProcessingScreen />
             </motion.div>
           )}
           {userState && userState == "connect" && (
