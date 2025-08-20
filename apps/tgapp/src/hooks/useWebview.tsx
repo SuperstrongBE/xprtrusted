@@ -39,16 +39,10 @@ export function useIsWebView(): WebViewResult {
     ) {
       setIsWebView(true);
       setContext("webview");
-    }
-
-    // Discord WebView detection
-    if (/DiscordBot/.test(ua) || /Discord/.test(ua)) {
+    } else if (/DiscordBot/.test(ua) || /Discord/.test(ua)) {
       setIsWebView(true);
       setContext("webview");
-    }
-
-    // iOS Safari - regular browser
-    if (
+    } else if (
       isIOS &&
       /Safari/.test(ua) &&
       !/CriOS/.test(ua) &&
@@ -57,22 +51,23 @@ export function useIsWebView(): WebViewResult {
     ) {
       setIsWebView(false);
       setContext("browser");
-    }
-
-    // iOS WebView (embedded in app)
-    if (isIOS && !/Safari/.test(ua) && !/CriOS/.test(ua) && !/FxiOS/.test(ua)) {
+    } else if (
+      isIOS &&
+      !/Safari/.test(ua) &&
+      !/CriOS/.test(ua) &&
+      !/FxiOS/.test(ua)
+    ) {
       setIsWebView(true);
       setContext("webview");
-    }
-
-    // Android Chrome - regular browser
-    if (isAndroid && /Chrome/.test(ua) && /Safari/.test(ua) && !/wv/.test(ua)) {
+    } else if (
+      isAndroid &&
+      /Chrome/.test(ua) &&
+      /Safari/.test(ua) &&
+      !/wv/.test(ua)
+    ) {
       setIsWebView(false);
       setContext("browser");
-    }
-
-    // Android WebView (embedded in app)
-    if (
+    } else if (
       isAndroid &&
       (/; wv\)/.test(ua) ||
         (/Version\/[\d.]+ Chrome\/[\d.]+ Mobile/.test(ua) &&
@@ -80,11 +75,12 @@ export function useIsWebView(): WebViewResult {
     ) {
       setIsWebView(true);
       setContext("webview");
+    } else {
+      setIsWebView(false);
+      setContext("browser");
     }
 
     // Default to browser for everything else
-    setIsWebView(false);
-    setContext("browser");
   }, []);
   return {isWebView, context};
 }
