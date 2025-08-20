@@ -43,7 +43,7 @@ export const TrustifyProvider: FC<UserProviderProviderProps> = ({children}) => {
   // The provider can pass down additional state or methods in the value.
   // Right now, we are providing an UserProvider object.
 
-  const [userState, setUserState] = useState<UserState>();
+  const [userState, setUserState] = useState<UserState>("prepare");
 
   const providerValue: TrustifyContextType = useMemo(() => {
     return {

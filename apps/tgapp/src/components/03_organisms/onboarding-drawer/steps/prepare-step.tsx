@@ -33,14 +33,14 @@ export const PrepareStep: React.FunctionComponent<PrepareStepProps> = ({
             if (result) {
               setUserState("trusted");
             } else {
-              setUserState("start");
+              setUserState("connect");
             }
           });
         })
         .catch(() => {
           console.log("untrused");
           wait(3000).then(() => {
-            setUserState("start");
+            setUserState("connect");
           });
         });
     }

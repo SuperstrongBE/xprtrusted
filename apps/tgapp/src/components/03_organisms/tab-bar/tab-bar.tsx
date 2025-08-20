@@ -17,9 +17,10 @@ export const TabBar: React.FunctionComponent<TabBarProps> = ({className}) => {
 
   const containerVariants = {
     open: {
-      width: "100%",
+      width: 80,
       height: 80,
-      transform: "translateY(0%)",
+      opacity: 0,
+      transform: "translateY(50%)",
       transition: {
         width: {delay: 0.2, duration: 0.2, type: "circInOut"},
         transform: {delay: 0, duration: 0.3, type: "circInOut"},
@@ -28,6 +29,7 @@ export const TabBar: React.FunctionComponent<TabBarProps> = ({className}) => {
     close: {
       width: 80,
       height: 80,
+
       transform: "translateY(50%)",
       transition: {
         width: {delay: 0.1, duration: 0.2, type: "circInOut"},
@@ -77,16 +79,18 @@ export const TabBar: React.FunctionComponent<TabBarProps> = ({className}) => {
             layout
             className="absolute left-2 top-2 right-2 bottom-2 overflow-hidden"
           >
-            <Image
-              alt=""
-              width={64}
-              height={64}
-              src={
-                profile
-                  ? `data:image/png;base64, ${profile && profile.avatar}`
-                  : ""
-              }
-            ></Image>
+            {profile && profile.avatar && (
+              <Image
+                alt=""
+                width={64}
+                height={64}
+                src={
+                  profile
+                    ? `data:image/png;base64, ${profile && profile.avatar}`
+                    : ""
+                }
+              ></Image>
+            )}
           </motion.div>
         </div>
       </motion.div>

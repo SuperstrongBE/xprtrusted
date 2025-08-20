@@ -10,6 +10,8 @@ import {LoadingStep} from "./steps/loading-step";
 import {PrepareStep} from "./steps/prepare-step";
 import {StartStep} from "./steps/start-step";
 import {VerifyStep} from "./steps/verify-step";
+import {Button} from "@/components/button";
+import {useXPRN} from "xprnkit";
 
 // Heading variants to animate each header in/out
 const headingVariants = {
@@ -36,6 +38,7 @@ export const OnboardingDrawer: React.FunctionComponent<
   React.HTMLAttributes<HTMLDivElement>
 > = ({children, className}) => {
   const {userState, setUserState} = useTrustifyContext();
+  const {disconnect} = useXPRN();
 
   // Let the grid rows adjust automatically.
   const rootClasses = classNames(
@@ -72,7 +75,7 @@ export const OnboardingDrawer: React.FunctionComponent<
             layout
             variants={drawerContainerVariants}
             initial="open"
-            animate={userState === "trusted" ? "closed" : "open"}
+            animate={userState === "trusted" ? "open" : "open"}
             transition={{
               layout: {duration: 0.4, ease: "circInOut"},
               opacity: {duration: 0.1},
@@ -89,7 +92,7 @@ export const OnboardingDrawer: React.FunctionComponent<
             </motion.div>
 
             {/* AnimatePresence for the drawer’s content */}
-            <motion.div className="bg-amber-50 px-5 pb-5 pt-15 w-full rounded-t-md relative">
+            <motion.div className="bg-amber-50 px-5 pb-5 pt-15 w-full  relative">
               <AnimatePresence mode="wait">
                 {userState === "prepare" && (
                   <motion.div
@@ -175,6 +178,27 @@ export const OnboardingDrawer: React.FunctionComponent<
                     layout="position"
                   >
                     <LinkStep onStepComplete={() => setUserState("prepare")} />
+                  </motion.div>
+                )}
+                {userState === "trusted" && (
+                  <motion.div
+                    key="link"
+                    variants={headingVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="grid gap-5 grid-cols-1"
+                    layoutId="onboaring"
+                    layout="position"
+                  >
+                    <Button
+                      onClick={() => {
+                        disconnect();
+                        window.close();
+                      }}
+                    >
+                      Close window
+                    </Button>
                   </motion.div>
                 )}
               </AnimatePresence>

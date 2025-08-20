@@ -1,5 +1,6 @@
 "use client";
 import classNames from "classnames";
+import {motion} from "framer-motion";
 
 type StepperProps = React.HTMLAttributes<HTMLDivElement> & {
   maxSteps: number;
@@ -12,14 +13,15 @@ export const Stepper: React.FunctionComponent<StepperProps> = ({
 }) => {
   const rootClasses = classNames({
     [`${className}`]: className,
+    "w-full": true,
   });
 
   return (
     <div className={`${rootClasses}`}>
-      <div className={`relative flex gap-3`}>
+      <div className={`relative flex gap-3 w-full`}>
         {new Array(maxSteps).fill(null).map((_, index) => (
           <StepperItem
-            active={index <= (activeStep ?? 0)}
+            active={index + 1 <= (activeStep ?? 0)}
             key={index}
           ></StepperItem>
         ))}
@@ -38,10 +40,10 @@ export const StepperItem: React.FunctionComponent<StepperItemProps> = ({
   const rootClasses = classNames({
     [`${className}`]: className,
     relative: true,
-
+    "flex-grow": true,
     "bg-black": true,
     "opacity-30": !active,
-    "w-20 h-2 rounded-full": true,
+    "h-2 rounded-full": true,
   });
-  return <div className={`${rootClasses}`}></div>;
+  return <motion.div className={`${rootClasses}`}></motion.div>;
 };

@@ -63,12 +63,12 @@ export const LinkStep: React.FunctionComponent<LinkStepProps> = ({
   return (
     <div className={`${rootClasses}`}>
       <h2 className="text-2xl font-bold text-black">
-        Now let’s link your <b>{telegramUser?.username}</b> Telegram account
-        with your
-        <b>{session && session.auth.actor.toString()} on XPR Network</b>
+        Now, link your <b>{telegramUser?.username}</b> Telegram account with
+        your <b>@{session && session.auth.actor.toString()}</b> XPR Network
+        account.
       </h2>
       <Button onClick={pushTrustify}>
-        Verify @{session?.auth.actor.toString()}
+        Link @{session?.auth.actor.toString()}
       </Button>
     </div>
   );

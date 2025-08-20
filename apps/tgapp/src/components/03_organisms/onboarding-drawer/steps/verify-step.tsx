@@ -83,7 +83,9 @@ export const VerifyStep: React.FunctionComponent<VerifyStepProps> = ({
         Great, now we need to verify your{" "}
         <b>{session && session.auth.actor.toString()}</b> account.
       </h2>
-      <Button onClick={verifyIdentity}>Verify @rockeronebp</Button>
+      <Button onClick={verifyIdentity}>
+        Verify @{session && session.auth.actor.toString()}
+      </Button>
     </div>
   );
 };

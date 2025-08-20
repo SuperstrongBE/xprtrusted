@@ -29,7 +29,7 @@ export const ConnectStep: React.FunctionComponent<ConnectStepProps> = ({
   return (
     <div className={`${rootClasses}`}>
       <h2 className="text-2xl font-bold text-black">
-        First, let’s connect your WebAuth wallet
+        The trusting process is done through your WebAuth wallet.
       </h2>
       <Button onClick={onConnect}>Connect WebAuth</Button>
     </div>
