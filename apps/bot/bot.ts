@@ -74,7 +74,7 @@ bot.on("chat_join_request", async ctx => {
 });
 
 bot.command("start", async ctx => {
-  console.log(ctx.text, "text");
+  console.log(ctx.text.slice(6), "channel");
   const hash = await getSHA256Hash(ctx.update.message.from.id.toString());
   const isTrusted = await isAccountTrusted(hash);
   if (!ctx.session) {
@@ -106,7 +106,7 @@ bot.command("start", async ctx => {
     sessionManager.set(hash, sessionData);
     ctx.session = sessionData;
   }
-  const mobileUrl = `${WEBAPP_URL}?user=${ctx.update.message.from.username}&id=${ctx.update.message.from.id}`;
+  const mobileUrl = `${WEBAPP_URL}/user=${ctx.update.message.from.username}&hash=${hash}&channel=${ctx.update.message.chat.id}`;
   ctx.reply(
     "Trusting process is about linking your telegram account with your XPR Network account with a layer of channel anonymity. \n\nTo start, open the app with the button below",
     Markup.inlineKeyboard([
@@ -126,7 +126,10 @@ bot.on(message("text"), async ctx => {
       return;
     } else {
       await ctx.reply(
-        `@${ctx.update.message.from.username}, You are not trusted, please register with @xprtrustbot`
+        `@${ctx.update.message.from.username}, You are not trusted, please register with [XPRTrustBot](https://t.me/xprtrustbot?start=${ctx.update.message.chat.id})`,
+        {
+          parse_mode: "Markdown",
+        }
       );
       await ctx.deleteMessage(ctx.update.message.message_id);
       return;

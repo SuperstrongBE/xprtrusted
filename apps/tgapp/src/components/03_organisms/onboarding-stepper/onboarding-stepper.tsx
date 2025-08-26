@@ -15,6 +15,7 @@ import {MessageScreen} from "./screens/message-screen";
 import {ProcessingScreen} from "./screens/processing-screen";
 import {useXPRN} from "xprnkit";
 import {CompleteScreen} from "./screens/complete-screen";
+import {TwitterConnectScreen} from "./screens/twitter-connect-screen";
 
 type OnboardingStepperProps = React.HTMLAttributes<HTMLDivElement> & {};
 export const OnboardingStepper: React.FunctionComponent<
@@ -39,6 +40,7 @@ export const OnboardingStepper: React.FunctionComponent<
   return (
     <div className={`${rootClasses}`}>
       <motion.div className="flex flex-col gap-4 w-full flex-grow  items-stretch justify-stretch h-full">
+        <TwitterConnectScreen />
         {userState && stepIndex > 0 && stepIndex < 3 && (
           <motion.div
             transition={{layout: {duration: 0.5, ease: "easeInOut"}}}
