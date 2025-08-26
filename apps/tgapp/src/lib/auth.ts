@@ -8,6 +8,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
       clientSecret: process.env.AUTH_TWITTER_SECRET!,
     }),
   ],
+  trustHost: true,
   callbacks: {
     async session({session, token}) {
       if (token?.sub) {
